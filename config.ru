@@ -1,5 +1,14 @@
-require 'sinatra/base'
+# require 'sinatra/base'
+#
+# require './controllers/application'
+#
+# map('/') { run ApplicationController }
 
-require './controllers/application'
+require 'bundler'
+Bundler.require
+
+DB = Sequel.sqlite('development.sqlite')
+
+require './controllers/application_controller'
 
 map('/') { run ApplicationController }
