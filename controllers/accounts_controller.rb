@@ -8,11 +8,13 @@ class AccountController < ApplicationController
   end
 
   get '/' do
-    redirect '/' if !session[:logged_in]
+    # redirect '/' if !session[:logged_in]
+    #
+    # users = User.all
+    #
+    # "Hello #{session[:username]}! Welcome back!"
 
-    users = User.all
-
-    "Hello #{session[:username]}! Welcome back!"
+    erb :account_create
   end
 
 end
