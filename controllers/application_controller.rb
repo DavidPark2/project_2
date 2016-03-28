@@ -14,7 +14,7 @@ class ApplicationController < Sinatra::Base
   enable :sessions
 
   get '/' do
-    erb :account_create
+    erb :landing_page
   end
 
 end
