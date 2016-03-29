@@ -4,11 +4,6 @@ class AccountController < ApplicationController
     erb :account_create
   end
 
-  # post '/' do
-
-  # end
-
-
   post '/create' do
     password = BCrypt::Password.create(params[:password])
 
@@ -25,21 +20,25 @@ class AccountController < ApplicationController
 
     accounts = Account.all
 
-    "Hello #{session[:username]}! Welcome back!"
-
-    # erb :accounts
+    "Hello #{session[:username]}! #{session[:password]} Welcome back!"
   end
 
   post '/login' do
     account = Account[username: params[:username]]
 
-    compare_to = Bcrypt::Password.new(account.password)
+    compare_to = BCrypt::Password.new(account.password)
     if compare_to == params[:password]
       session[:logged_in] = true
-      session[:username] = parmas[:username]
+      session[:username] = params[:username]
+      # redirect '/weather'
       "Welcome back #{params[:username]}!"
     else
-      "You entered the wrong username or password"
+      redirect '/'
+      wrong = "You entered the wrong username or password"
     end
+  end
+
+  get '/login' do
+    session[:logged_in] = false
   end
 end
