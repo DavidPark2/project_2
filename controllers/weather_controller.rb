@@ -10,3 +10,13 @@ class WeatherController < ApplicationController
     erb :weather
   end
 end
+
+
+# We will use this in order to get long/lad from google
+# require 'rest-client'
+#
+# location = RestClient.get 'your url here'
+#
+# coordinates = JSON.parse(location.body)
+#
+# coordinates['latitude']
