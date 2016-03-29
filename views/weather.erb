@@ -1,0 +1,29 @@
+<h3>Hi <%= username %>! </h3>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <form class="" action="/weather" method="post">
+          <input type="text" value="">
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% @weathers.each do |weather| %>
+  <h3><%= weather.location %></h3>
+  <p> <%= weather.temperature %></p>
+  <form class="" action="/weather" method="post">
+    <input visibility="hidden" type="hidden" name="weather_id" value="<%= weather.id %>">
+    <button class="btn btn-primary" type="submit" name="submit">DELETE!!!</button>
+  </form>
+
+<% end %>
+
+
+  # create_table(:weathers) do
+  #   primary_key :id
+  #   String :location
+  #   String :temperature
