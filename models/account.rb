@@ -2,6 +2,6 @@
 #
 # end
 
-class User < Sequel::Model
+class Account < Sequel::Model
 
 end
