@@ -33,7 +33,7 @@ class AccountController < ApplicationController
       # redirect '/weather'
       "Welcome back #{params[:username]}!"
     else
-      redirect '/'
+      redirect '/accounts'
       wrong = "You entered the wrong username or password"
     end
   end
