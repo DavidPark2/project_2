@@ -11,6 +11,8 @@ class AccountController < ApplicationController
 
     session[:logged_in] = true
     session[:username] = params[:username]
+    session[:email] = params[:email]
+    session[:password] = password
 
     redirect '/accounts/create'
   end
@@ -20,7 +22,8 @@ class AccountController < ApplicationController
 
     accounts = Account.all
 
-    "Hello #{session[:username]}! #{session[:password]} Welcome back!"
+    sessionName = "Hello #{session[:username]}! #{session[:email]} #{session[:password]} Welcome back!"
+
   end
 
   post '/login' do
@@ -29,12 +32,13 @@ class AccountController < ApplicationController
     compare_to = BCrypt::Password.new(account.password)
     if compare_to == params[:password]
       session[:logged_in] = true
-      session[:username] = params[:username]
+      session[:email] = params[:email]
+      session[:email] = Account.find(params[:account_id])
+
       # redirect '/weather'
-      "Welcome back #{params[:username]}!"
+      "Welcome back #{session[:email]}!"
     else
       redirect '/accounts'
-      wrong = "You entered the wrong username or password"
     end
   end
 

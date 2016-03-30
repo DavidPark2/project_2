@@ -5,6 +5,7 @@
 # map('/') { run ApplicationController }
 
 require 'bundler'
+require 'date'
 Bundler.require
 
 DB = Sequel.sqlite('development.sqlite')
