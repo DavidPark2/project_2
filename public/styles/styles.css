@@ -1,3 +1,5 @@
 body {
-  background: red;
+    background: url("http://imgur.com/22G1nL8");
+    background-size: cover;
+    background-position: center;
 }
