@@ -26,6 +26,19 @@ end
 # #########
 # coordinates
 # #########
+# make variable
+Weather.create
+  date: params[:date],
+  location: params[:location],
+  current_temperature: params[:current_temperature],
+  summary: params[:summary],
+  rain: params[:rain],
+  tomorrow_max_temperature: params[:tomorrow_max_temperature],
+  tomorrow_min_temperature: params[:tomorrow_min_temperature]
+
+
+
+
 location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDNdMQDvtbIvoO6tNxkbs9BiS45BT_nXLE'
 
 coordinates = JSON.parse(location)
