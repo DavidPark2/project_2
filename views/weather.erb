@@ -1,4 +1,5 @@
 
+
 <section>
   <div class="container">
     <div class="row">
@@ -12,11 +13,11 @@
 </section>
 
 <% @weathers.each do |weather| %>
-  <h3><%= weather.location %></h3>
-  <p> <%= weather.temperature %></p>
-  <form class="" action="/weather" method="post">
-    <input visibility="hidden" type="hidden" name="weather_id" value="<%= weather.id %>">
-    <button class="btn btn-primary" type="submit" name="submit">DELETE!!!</button>
-  </form>
+<h3><%= weather.location %></h3>
+<p><%= weather.temperature %></p>
+<form class="" action="/weather" method="post">
+  <input visibility="hidden" type="hidden" name="weather_id" value="<%= weather.id %>">
+  <button class="btn btn-primary" type="submit" name="submit">DELETE!!!</button>
+</form>
 
 <% end %>
