@@ -39,7 +39,7 @@ end
 #
 #
 #
-# location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDNdMQDvtbIvoO6tNxkbs9BiS45BT_nXLE'
+# location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=' + ENV['MAPS_KEY']
 #
 # coordinates = JSON.parse(location)
 #
@@ -48,7 +48,7 @@ end
 # # #########
 # # Forecast api CALL
 # # #########
-# temps = RestClient.get 'https://api.forecast.io/forecast/d2786edc0fce4d176dfd20318726c878/37.8267,-122.423'
+# temps = RestClient.get 'https://api.forecast.io/forecast/' + ENV['FORECAST'] + '/37.8267,-122.423'
 #
 # temp = JSON.parse(temps)
 #
