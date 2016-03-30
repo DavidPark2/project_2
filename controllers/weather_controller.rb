@@ -18,6 +18,7 @@ class WeatherController < ApplicationController
     erb :weather
   end
 
+
   def get_forecast(zip_code)
     location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + '&key=AIzaSyDNdMQDvtbIvoO6tNxkbs9BiS45BT_nXLE'
 

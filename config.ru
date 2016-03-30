@@ -3,7 +3,7 @@
 # require './controllers/application'
 #
 # map('/') { run ApplicationController }
-
+ENV['RACK_ENV'] ||= 'development'
 require 'bundler'
 require 'date'
 Bundler.require
