@@ -33,7 +33,8 @@ class AccountController < ApplicationController
     if compare_to == params[:password]
       session[:logged_in] = true
       session[:email] = params[:email]
-      session[:email] = Account.find(params[:account_id])
+      session[:email] = account.email
+      session[:user_id] = account.id
 
       # redirect '/weather'
       "Welcome back #{session[:email]}!"
