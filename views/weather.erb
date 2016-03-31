@@ -1,6 +1,7 @@
 <section>
   <div class="container">
     <div class="row">
+<<<<<<< HEAD
       <div class="col-xs-2 col-sm-2 col-md-3 col-lg-4"></div>
         <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2">
           <form class="" action="/weather" method="post">
@@ -11,20 +12,30 @@
           </form>
         </div>
       <div class="col-xs-2 col-sm-2 col-md-3 col-lg-4"></div>
+=======
+      <div class="col-lg-12">
+        <form class="" action="/weather" method="post">
+          <input type="text" name="area" value="">
+        </form>
+      </div>
+>>>>>>> d486d22f4e5903bf7332334188df4339ccc74688
     </div>
   </div>
 </section>
 
 <% @forecasts.each do |forecast| %>
-  <h3><%= forecast[:curDate] %><h3>
-  <h3><%= forecast[:timeZone] %></h3>
-  <h3><%= forecast[:curSum] %></h3>
-  <h3><%= forecast[:curTemp] %></h3>
-  <h3><%= forecast[:curPrecip] %></h3>
-  <h3><%= forecast[:maxTomorTemp] %></h3>
-  <h3><%= forecast[:minTomorTemp] %></h3>
-  <form class="" action="/" method="post">
-    <input visibility="hidden" type="hidden" name="weather_id" value="<%= weather.id %>">
-    <button class="btn btn-primary" type="submit" name="weather_id">DELETE!!!</button>
+  <h2><%= forecast[:timeZone] %></h2>
+  <ul>
+    <li><%= forecast[:curDate] %><li>
+    <li><%= forecast[:curSum] %></li>
+    <li><%= forecast[:curTemp] %></li>
+    <li><%= forecast[:curPrecip] %></li>
+    <li><%= forecast[:maxTomorTemp] %></li>
+    <li><%= forecast[:minTomorTemp] %></li>
+  </ul>
+
+  <form class="" action="/weather/delete" method="post">
+    <input type="hidden" name="weather_id" value="<%= forecast[:id] %>">
+    <button class="btn btn-primary" type="submit">DELETE!!!</button>
   </form>
 <% end %>

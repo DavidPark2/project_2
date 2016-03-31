@@ -18,12 +18,4 @@ class ApplicationController < Sinatra::Base
     erb :landing_page
   end
 
-  post '/' do
-    @weather = Weather.find(params[:weather_id])
-    @weather.destroy
-    @weathers = Weather.all
-    erb :weather
-    redirect '/weather'
-  end
-
 end
