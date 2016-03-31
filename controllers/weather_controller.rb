@@ -5,10 +5,10 @@ class WeatherController < ApplicationController
 
   get '/' do
 
-    @weathers = @current_user.weathers.all
-    binding pry
+    @weathers = @current_user.weathers
+    puts @weathers
     @forecasts = []
-    @weather.each do |weather|
+    @weathers.each do |weather|
       # 1. get the forecase for each user's zip code
       @forecasts.push get_forecast(weather.zip)
       # 2. Save the forecast into an array

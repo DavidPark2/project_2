@@ -9,6 +9,7 @@ Sequel.migration do
     create_table(:weathers) do
       primary_key :id
       String :area
+      foreign_key :account_id, :accounts
     end
   end
 end
