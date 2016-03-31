@@ -6,13 +6,15 @@
 ENV['RACK_ENV'] ||= 'development'
 require 'bundler'
 require 'date'
-Bundler.require, :default, ENV['RACK_ENV'].to_sym
+Bundler.require(:default)
 Dotenv.load
 
-DB = if ENV['RACK_ENV'] == 'production'
-  Sequel.connect(ENV['DATABASE_URL'])
+if ENV['DATABASE_URL']
+  Bundler.require(:default, :production)
+  DB = Sequel.connect(ENV['DATABASE_URL'])
 else
-  Sequel.sqlite('development.sqlite')
+  Bundler.require(:default, :development)
+  DB = Sequel.sqlite('development.sqlite')
 end
 
 require './models/account'
