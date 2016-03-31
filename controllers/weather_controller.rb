@@ -35,13 +35,10 @@ class WeatherController < ApplicationController
   end
 
 
-<<<<<<< HEAD
+
   def get_forecast(zip_code)
     location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + "&=key" + ENV['MAPS_KEY']
-=======
-  def get_forecast(zip_code, weather_id)
-    location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + '&key=AIzaSyDNdMQDvtbIvoO6tNxkbs9BiS45BT_nXLE'
->>>>>>> d486d22f4e5903bf7332334188df4339ccc74688
+
 
     coordinates = JSON.parse(location)
     # puts coordinates
@@ -73,48 +70,25 @@ class WeatherController < ApplicationController
   end
 
   post '/delete' do
-    puts params[:weather_id]
-    puts '-------------------'
-
 
     @weather = Weather[:id => params[:weather_id]]
     @weather.destroy
 
     redirect '/weather'
 
-  #   # erb :weather
-  # end
-  end
-
-  post '/' do
-<<<<<<< HEAD
-    # zips = params[:zips]
-    # @weather = Weather.create area: zips
-    #
-    # redirect '/weather'
-=======
-
-    if session[:user_id] == nil
-      p 'not logged in'
-      redirect '/accounts'
     end
 
-    zips = params[:area]
-    @weathers = @current_user.add_weather(area: params[:area]).save
-        # @weather = Weather.create area: zips
+  post '/' do
 
+      if session[:user_id] == nil
+        p 'not logged in'
+        redirect '/accounts'
+      end
 
+      zips = params[:area]
+      @weathers = @current_user.add_weather(area: params[:area]).save
 
+      redirect '/weather'
 
-    redirect '/weather'
->>>>>>> d486d22f4e5903bf7332334188df4339ccc74688
-
-
-        # @weathers = Weather.all
-
-
-
-
-
-  end
+    end
 end
