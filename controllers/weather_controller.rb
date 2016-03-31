@@ -35,8 +35,8 @@ class WeatherController < ApplicationController
   end
 
 
-  def get_forecast(zip_code, weather_id)
-    location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + '&key=AIzaSyDNdMQDvtbIvoO6tNxkbs9BiS45BT_nXLE'
+  def get_forecast(zip_code)
+    location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + "&=key" + ENV['MAPS_KEY']
 
     coordinates = JSON.parse(location)
     # puts coordinates
@@ -47,7 +47,7 @@ class WeatherController < ApplicationController
     lat = coordinates['lat'].to_s
     lng = coordinates['lng'].to_s
 
-    temps = RestClient.get 'https://api.forecast.io/forecast/d2786edc0fce4d176dfd20318726c878/' + lat + ',' + lng
+    temps = RestClient.get 'https://api.forecast.io/forecast/' + ENV['FORECAST'] + '/' + lat + ',' + lng
 
     temp = JSON.parse(temps)
 
