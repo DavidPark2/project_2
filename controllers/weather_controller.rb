@@ -1,16 +1,31 @@
 class WeatherController < ApplicationController
+  @current_user = "no user"
   before do
+    @id = session[:user_id]
     @current_user = Account[session[:user_id]]
+    puts 'wwwwwwww'
+    puts @current_user
+    p session[:user_id]
+    puts 'wwwwwwww'
   end
 
   get '/' do
 
     @weathers = @current_user.weathers
+    puts '==========='
+
+
     puts @weathers
+    puts '==========='
     @forecasts = []
+    puts '==========='
+    puts @forecasts
+    puts '==========='
     @weathers.each do |weather|
       # 1. get the forecase for each user's zip code
-      @forecasts.push get_forecast(weather.zip)
+      puts weather.id
+      puts ' -------- weather id'
+      @forecasts.push get_forecast(weather.area, weather.id)
       # 2. Save the forecast into an array
 
       # 3. Make array of forecasts available to the view by making it an @instance variable
@@ -20,7 +35,7 @@ class WeatherController < ApplicationController
   end
 
 
-  def get_forecast(zip_code)
+  def get_forecast(zip_code, weather_id)
     location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + '&key=AIzaSyDNdMQDvtbIvoO6tNxkbs9BiS45BT_nXLE'
 
     coordinates = JSON.parse(location)
@@ -47,19 +62,47 @@ class WeatherController < ApplicationController
       curTemp: temp['currently']['temperature'],
       curPrecip: temp['currently']['precipProbability'],
       maxTomorTemp: temp['daily']['data'][1]['temperatureMax'],
-      minTomorTemp: temp['daily']['data'][1]['temperatureMin']
+      minTomorTemp: temp['daily']['data'][1]['temperatureMin'],
+      id: weather_id
     }
   end
 
-  post '/' do
-    # zips = params[:zips]
-    # @weather = Weather.create area: zips
+  post '/delete' do
+    puts params[:weather_id]
+    puts '-------------------'
 
-    # redirect '/weather'
 
-    @weathers = Weather.all
+    @weather = Weather[:id => params[:weather_id]]
+    @weather.destroy
 
-    erb :weather
+    redirect '/weather'
+
+  #   # erb :weather
+  # end
   end
 
+  post '/' do
+
+    if session[:user_id] == nil
+      p 'not logged in'
+      redirect '/accounts'
+    end
+
+    zips = params[:area]
+    @weathers = @current_user.add_weather(area: params[:area]).save
+        # @weather = Weather.create area: zips
+
+
+
+
+    redirect '/weather'
+
+
+        # @weathers = Weather.all
+
+
+
+
+
+  end
 end
