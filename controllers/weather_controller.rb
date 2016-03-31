@@ -53,9 +53,9 @@ class WeatherController < ApplicationController
 
   post '/' do
     # zips = params[:zips]
-    @weather = Weather.create area: zips
+    # @weather = Weather.create area: zips
 
-    redirect '/weather'
+    # redirect '/weather'
 
     @weathers = Weather.all
 
