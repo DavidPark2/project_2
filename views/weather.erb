@@ -5,19 +5,23 @@
     <div class="row">
       <div class="col-lg-12">
         <form class="" action="/weather" method="post">
-          <input type="text" value="">
+          <input type="text" name="zips" value="">
         </form>
       </div>
     </div>
   </div>
 </section>
 
-<% @weathers.each do |weather| %>
-<h3><%= weather.location %></h3>
-<p><%= weather.temperature %></p>
-<form class="" action="/weather" method="post">
-  <input visibility="hidden" type="hidden" name="weather_id" value="<%= weather.id %>">
-  <button class="btn btn-primary" type="submit" name="submit">DELETE!!!</button>
-</form>
-
+<% @forecasts.each do |forecast| %>
+  <h3><%= forecast[:curDate] %><h3>
+  <h3><%= forecast[:timeZone] %></h3>
+  <h3><%= forecast[:curSum] %></h3>
+  <h3><%= forecast[:curTemp] %></h3>
+  <h3><%= forecast[:curPrecip] %></h3>
+  <h3><%= forecast[:maxTomorTemp] %></h3>
+  <h3><%= forecast[:minTomorTemp] %></h3>
+  <form class="" action="/" method="post">
+    <input visibility="hidden" type="hidden" name="weather_id" value="<%= weather.id %>">
+    <button class="btn btn-primary" type="submit" name="weather_id">DELETE!!!</button>
+  </form>
 <% end %>

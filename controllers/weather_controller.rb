@@ -1,74 +1,65 @@
 class WeatherController < ApplicationController
+  before do
+    @current_user = Account[session[:user_id]]
+  end
 
   get '/' do
-    @weathers = Weather.all
-    puts @weathers
+
+    @weathers = @current_user.weathers.all
+    binding pry
+    @forecasts = []
+    @weather.each do |weather|
+      # 1. get the forecase for each user's zip code
+      @forecasts.push get_forecast(weather.zip)
+      # 2. Save the forecast into an array
+
+      # 3. Make array of forecasts available to the view by making it an @instance variable
+    end
+
     erb :weather
   end
 
+
+  def get_forecast(zip_code)
+    location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + '&key=AIzaSyDNdMQDvtbIvoO6tNxkbs9BiS45BT_nXLE'
+
+    coordinates = JSON.parse(location)
+    # puts coordinates
+    # puts zips
+    # puts '-------------coords======'
+    coordinates =  coordinates['results'][0]['geometry']['location']
+
+    lat = coordinates['lat'].to_s
+    lng = coordinates['lng'].to_s
+
+    temps = RestClient.get 'https://api.forecast.io/forecast/d2786edc0fce4d176dfd20318726c878/' + lat + ',' + lng
+
+    temp = JSON.parse(temps)
+
+    # Current Date
+    curDate = temp['currently']['time'].to_s
+    # curDate = DateTime.strptime(curDate, '%s')
+
+    {
+      curdate: DateTime.strptime(curDate, '%s'),
+      timeZone: temp['timezone'],
+      curSum: temp['currently']['summary'],
+      curTemp: temp['currently']['temperature'],
+      curPrecip: temp['currently']['precipProbability'],
+      maxTomorTemp: temp['daily']['data'][1]['temperatureMax'],
+      minTomorTemp: temp['daily']['data'][1]['temperatureMin']
+    }
+  end
+
   post '/' do
-    @weather = Weather.create location: params[:location], temperature: params[:temperature]
-    # @weather = Weather.create({
-    #   :username => params[:username],
-    #   :email => params[:email],
-    #   :password => password
-    # })
+    # zips = params[:zips]
+    @weather = Weather.create area: zips
+
+    redirect '/weather'
+
+    @weathers = Weather.all
 
     erb :weather
   end
 
 end
-
-###############################
-# API CALL
-# #############################
-
-# #########
-# coordinates
-# #########
-# make variable
-# Weather.create
-#   date: params[:date],
-#   location: params[:location],
-#   current_temperature: params[:current_temperature],
-#   summary: params[:summary],
-#   rain: params[:rain],
-#   tomorrow_max_temperature: params[:tomorrow_max_temperature],
-#   tomorrow_min_temperature: params[:tomorrow_min_temperature]
-#
-#
-#
-#
-# location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDNdMQDvtbIvoO6tNxkbs9BiS45BT_nXLE'
-#
-# coordinates = JSON.parse(location)
-#
-# coordinates['results'][0]['geometry']['location']
-#
-# # #########
-# # Forecast api CALL
-# # #########
-# temps = RestClient.get 'https://api.forecast.io/forecast/d2786edc0fce4d176dfd20318726c878/37.8267,-122.423'
-#
-# temp = JSON.parse(temps)
-#
-# # Current Date
-# curDate = temp['currently']['time'].to_s
-# curDate = DateTime.strptime(curDate, '%s')
-#
-# # Current summary
-# curSum = temp['currently']['summary']
-#
-# # Current temp
-# curTemp = temp['currently']['temperature']
-#
-# # Current precip
-# curPrecip = temp['currently']['precipProbability']
-#
-# # Tomorrow temp
-# maxTomorTemp = temp['daily']['data'][1]['temperatureMax']
-# minTomorTemp = temp['daily']['data'][1]['temperatureMin']
-#
-# # ##########################
-# # End of API CALL
-# # ########################

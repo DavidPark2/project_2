@@ -14,7 +14,7 @@ class AccountController < ApplicationController
     session[:email] = params[:email]
     session[:password] = password
 
-    redirect '/accounts/create'
+    redirect '/weather'
   end
 
   get '/create' do
@@ -27,16 +27,23 @@ class AccountController < ApplicationController
   end
 
   post '/login' do
-    account = Account[username: params[:username]]
-
+    puts '--------------'
+    puts params
+    puts '-----------------'
+    # binding.pry
+    account = Account.where(email: params[:username]).first
+    puts '--------------'
+    puts account
+    puts '----------------'
     compare_to = BCrypt::Password.new(account.password)
     if compare_to == params[:password]
       session[:logged_in] = true
-      session[:email] = params[:email]
-      session[:email] = Account.find(params[:account_id])
+      session[:email] = params[:username]
+      # session[:email] = account.email
+      session[:user_id] = account.id
 
-      # redirect '/weather'
-      "Welcome back #{session[:email]}!"
+      redirect '/weather'
+      # "Welcome back #{session[:email]}!"
     else
       redirect '/accounts'
     end

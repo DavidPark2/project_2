@@ -8,13 +8,7 @@ Sequel.migration do
     end
     create_table(:weathers) do
       primary_key :id
-      String :date
-      String :location
-      String :current_temperature
-      String :summary
-      String :rain
-      String :tomorrow_max_temperature
-      String :tomorrow_min_temperature
+      String :area
     end
   end
 end
