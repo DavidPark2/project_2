@@ -13,14 +13,16 @@
 </section>
 
 <% @forecasts.each do |forecast| %>
+  <h2><%= forecast[:timeZone] %></h2>
+  <ul>
+    <li><%= forecast[:curDate] %><li>
+    <li><%= forecast[:curSum] %></li>
+    <li><%= forecast[:curTemp] %></li>
+    <li><%= forecast[:curPrecip] %></li>
+    <li><%= forecast[:maxTomorTemp] %></li>
+    <li><%= forecast[:minTomorTemp] %></li>
+  </ul>
 
-  <li><%= forecast[:curDate] %><li>
-  <li><%= forecast[:timeZone] %></li>
-  <li><%= forecast[:curSum] %></li>
-  <li><%= forecast[:curTemp] %></li>
-  <li><%= forecast[:curPrecip] %></li>
-  <li><%= forecast[:maxTomorTemp] %></li>
-  <li><%= forecast[:minTomorTemp] %></li>
   <form class="" action="/weather/delete" method="post">
     <input type="hidden" name="weather_id" value="<%= forecast[:id] %>">
     <button class="btn btn-primary" type="submit">DELETE!!!</button>

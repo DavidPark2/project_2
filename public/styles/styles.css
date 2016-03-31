@@ -41,6 +41,12 @@ footer {
     color: white;
 }
 
+li {
+  color: white;
+}
+h2 {
+  color: white;
+}
 @media(max-width:768px) {
     section {
         padding-top: 25px;
