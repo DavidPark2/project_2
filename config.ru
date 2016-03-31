@@ -7,6 +7,7 @@ ENV['RACK_ENV'] ||= 'development'
 require 'bundler'
 require 'date'
 Bundler.require
+Dotenv.load
 
 DB = Sequel.sqlite('development.sqlite')
 
