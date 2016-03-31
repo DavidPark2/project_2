@@ -39,6 +39,7 @@ class WeatherController < ApplicationController
   def get_forecast(zip_code)
     location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + "&=key" + ENV['MAPS_KEY']
 
+
     coordinates = JSON.parse(location)
     # puts coordinates
     # puts zips
@@ -69,9 +70,6 @@ class WeatherController < ApplicationController
   end
 
   post '/delete' do
-    puts params[:weather_id]
-    puts '-------------------'
-
 
     @weather = Weather[:id => params[:weather_id]]
     @weather.destroy
@@ -99,10 +97,6 @@ class WeatherController < ApplicationController
     redirect '/weather'
 
         # @weathers = Weather.all
-
-
-
-
 
   end
 end
