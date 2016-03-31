@@ -19,20 +19,6 @@ body {
     -o-background-size: cover;
 }
 
-/*.image-bg-fluid-height {
-	background: url("http://i.imgur.com/22G1nL8.jpg") no-repeat center center scroll;
-    padding: 100px 0;
-}
-
-.image-bg-fixed-height {
-	background: url("http://i.imgur.com/22G1nL8.jpg") no-repeat center center scroll;
-    height: 450px;
-}*/
-
-.img-center {
-	margin: 0 auto;
-}
-
 section {
     padding: 75px 0;
 }
