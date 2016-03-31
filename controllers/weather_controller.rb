@@ -4,7 +4,9 @@ class WeatherController < ApplicationController
   end
 
   get '/' do
+
     @weathers = @current_user.weathers.all
+    binding pry
     @forecasts = []
     @weather.each do |weather|
       # 1. get the forecase for each user's zip code
@@ -13,7 +15,6 @@ class WeatherController < ApplicationController
 
       # 3. Make array of forecasts available to the view by making it an @instance variable
     end
-    # puts @weathers
 
     erb :weather
   end
