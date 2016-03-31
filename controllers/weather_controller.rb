@@ -35,8 +35,13 @@ class WeatherController < ApplicationController
   end
 
 
+<<<<<<< HEAD
+  def get_forecast(zip_code)
+    location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + "&=key" + ENV['MAPS_KEY']
+=======
   def get_forecast(zip_code, weather_id)
     location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + '&key=AIzaSyDNdMQDvtbIvoO6tNxkbs9BiS45BT_nXLE'
+>>>>>>> d486d22f4e5903bf7332334188df4339ccc74688
 
     coordinates = JSON.parse(location)
     # puts coordinates
@@ -47,7 +52,7 @@ class WeatherController < ApplicationController
     lat = coordinates['lat'].to_s
     lng = coordinates['lng'].to_s
 
-    temps = RestClient.get 'https://api.forecast.io/forecast/d2786edc0fce4d176dfd20318726c878/' + lat + ',' + lng
+    temps = RestClient.get 'https://api.forecast.io/forecast/' + ENV['FORECAST'] + '/' + lat + ',' + lng
 
     temp = JSON.parse(temps)
 
@@ -82,6 +87,12 @@ class WeatherController < ApplicationController
   end
 
   post '/' do
+<<<<<<< HEAD
+    # zips = params[:zips]
+    # @weather = Weather.create area: zips
+    #
+    # redirect '/weather'
+=======
 
     if session[:user_id] == nil
       p 'not logged in'
@@ -96,6 +107,7 @@ class WeatherController < ApplicationController
 
 
     redirect '/weather'
+>>>>>>> d486d22f4e5903bf7332334188df4339ccc74688
 
 
         # @weathers = Weather.all
