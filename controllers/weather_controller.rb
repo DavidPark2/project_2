@@ -26,6 +26,8 @@ class WeatherController < ApplicationController
       puts weather.id
       puts ' -------- weather id'
       @forecasts.push get_forecast(weather.area, weather.id)
+      session[:user_location] = weather.area
+      p session[:user_location]
       # 2. Save the forecast into an array
 
       # 3. Make array of forecasts available to the view by making it an @instance variable
@@ -52,12 +54,12 @@ class WeatherController < ApplicationController
     temp = JSON.parse(temps)
 
     # Current Date
-    curDate = temp['currently']['time'].to_s
+    # curDate = temp['currently']['time'].to_s
     # curDate = DateTime.strptime(curDate, '%s')
 
     {
-      curdate: DateTime.strptime(curDate, '%s'),
-      timeZone: temp['timezone'],
+      # curdate: DateTime.strptime(curDate, '%s'),
+      timeZone: zip_code, # this is the location data; todo: refactor/rename db table column
       curSum: temp['currently']['summary'],
       curTemp: temp['currently']['temperature'],
       curPrecip: temp['currently']['precipProbability'],
