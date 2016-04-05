@@ -5,14 +5,20 @@ class AccountController < ApplicationController
   end
 
   post '/create' do
-    password = BCrypt::Password.create(params[:password])
-    @account = Account.create username: params[:username], email: params[:email],  password: password
-    session[:logged_in] = true
-    session[:username] = params[:username]
-    session[:email] = params[:email]
-    session[:password] = password
-    session[:user_id] = @account.id
-    redirect '/weather'
+    user = Account[username: params[:username]]
+    if !user
+      password = BCrypt::Password.create(params[:password])
+      @account = Account.create username: params[:username], email: params[:email],  password: password
+      session[:logged_in] = true
+      session[:username] = params[:username]
+      session[:email] = params[:email]
+      session[:password] = password
+      session[:user_id] = @account.id
+      redirect '/weather'
+    else
+      $message = "This username exists.  Please input a different username."
+      redirect '/accounts'
+    end
   end
 
   get '/create' do
@@ -27,11 +33,10 @@ class AccountController < ApplicationController
     if compare_to == params[:password]
       session[:logged_in] = true
       session[:email] = params[:username]
-      # session[:email] = account.email
       session[:user_id] = account.id
       redirect '/weather'
-      # "Welcome back #{session[:email]}!"
     else
+      $message = "Incorrect username or password, please try again."
       redirect '/accounts'
     end
   end

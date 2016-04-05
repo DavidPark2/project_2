@@ -16,12 +16,15 @@ class WeatherController < ApplicationController
     erb :weather
   end
 
+# This method get API
   def get_forecast(zip_code, weather_id)
+    # This gets lat and long from google geocode
     location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + "&=key" + ENV['MAPS_KEY']
     coordinates = JSON.parse(location)
     coordinates =  coordinates['results'][0]['geometry']['location']
     lat = coordinates['lat'].to_s
     lng = coordinates['lng'].to_s
+    # This uses lat and long to get weather from forecast.io
     temps = RestClient.get 'https://api.forecast.io/forecast/' + ENV['FORECAST'] + '/' + lat + ',' + lng
     temp = JSON.parse(temps)
     {
