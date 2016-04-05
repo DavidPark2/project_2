@@ -27,23 +27,27 @@ class AccountController < ApplicationController
     sessionName = "Hello #{session[:username]}! #{session[:email]} #{session[:password]} Welcome back!"
   end
 
+
   post '/login' do
     account = Account.where(email: params[:username]).first
-    compare_to = BCrypt::Password.new(account.password)
-    if compare_to == params[:password]
+    user = Account[email: params[:username]]
+    if !user
+      $message = "You have entered an incorrect username or password.  Please try again."
+      redirect '/accounts'
+    elsif BCrypt::Password.new(account.password) == params[:password]
       session[:logged_in] = true
       session[:email] = params[:username]
       session[:user_id] = account.id
       redirect '/weather'
     else
-      $message = "Incorrect username or password, please try again."
+      $message = "You have entered an incorrect username or password.  Please try again."
       redirect '/accounts'
     end
   end
 
-  get '/login' do
-    session[:logged_in] = false
-  end
+  # get '/login' do
+  #   session[:logged_in] = false
+  # end
 
   get '/logout' do
     session[:logged_in] = false
