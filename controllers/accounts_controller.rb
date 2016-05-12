@@ -4,6 +4,7 @@ class AccountController < ApplicationController
     erb :account_create
   end
 
+  # Create a account
   post '/create' do
     user = Account[username: params[:username]]
     if !user
@@ -27,7 +28,7 @@ class AccountController < ApplicationController
     sessionName = "Hello #{session[:username]}! #{session[:email]} #{session[:password]} Welcome back!"
   end
 
-
+  # login
   post '/login' do
     account = Account.where(email: params[:username]).first
     user = Account[email: params[:username]]
@@ -45,10 +46,7 @@ class AccountController < ApplicationController
     end
   end
 
-  # get '/login' do
-  #   session[:logged_in] = false
-  # end
-
+  # logout
   get '/logout' do
     session[:logged_in] = false
     redirect '/accounts'
