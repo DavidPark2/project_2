@@ -37,10 +37,10 @@
         <h2><%= forecast[:timeZone] %></h2>
         <ul>
           <li>Current Forecast: <%= forecast[:curSum] %></li>
-          <li>Current Temp: <%= forecast[:curTemp] %></li>
-          <li>Current Precip: <%= forecast[:curPrecip] %></li>
-          <li>Tomorrow's HI: <%= forecast[:maxTomorTemp] %></li>
-          <li>Tomorrow's LO: <%= forecast[:minTomorTemp] %></li>
+          <li>Current Temperature: <%= forecast[:curTemp] %> °F</li>
+          <li>Chance of rain: <%= forecast[:curPrecip] * 100 %>%</li>
+          <li>Tomorrow's High: <%= forecast[:maxTomorTemp] %> °F</li>
+          <li>Tomorrow's Low: <%= forecast[:minTomorTemp] %> °F</li>
         </ul>
         <form class="" action="/weather/delete" method="post">
           <input type="hidden" name="weather_id" value="<%= forecast[:id] %>">
