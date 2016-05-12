@@ -5,5 +5,6 @@ class ApplicationController < Sinatra::Base
 
   get '/' do
     erb :landing_page
+    redirect '/accounts'
   end
 end
