@@ -69,3 +69,15 @@ h2 {
 #resize {
   margin-bottom: 15px;
 }
+
+#center {
+  text-align: center;
+}
+
+#format {
+  list-style: none;
+}
+
+#zip {
+  text-align: center;
+}
