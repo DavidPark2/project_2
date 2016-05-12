@@ -1,7 +1,7 @@
 class WeatherController < ApplicationController
-  @current_user = "no user"
+
   before do
-    @id = session[:user_id]
+    # @id = session[:user_id]
     @current_user = Account[session[:user_id]]
   end
 
@@ -21,6 +21,7 @@ class WeatherController < ApplicationController
     # This gets lat and long from google geocode
     location = RestClient.get 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip_code + "&=key" + ENV['MAPS_KEY']
     coordinates = JSON.parse(location)
+    city = coordinates['results'][0]['formatted_address']
     coordinates =  coordinates['results'][0]['geometry']['location']
     lat = coordinates['lat'].to_s
     lng = coordinates['lng'].to_s
@@ -29,21 +30,23 @@ class WeatherController < ApplicationController
     temp = JSON.parse(temps)
     {
       # curdate: DateTime.strptime(curDate, '%s'),
-      timeZone: zip_code, # this is the location data; todo: refactor/rename db table column
+      timeZone: city, # this is the location data; todo: refactor/rename db table column
       curSum: temp['currently']['summary'],
       curTemp: temp['currently']['temperature'],
-      curPrecip: temp['currently']['precipProbability'],
+      curPrecip: temp['daily']['data'][0]['precipProbability'],
       maxTomorTemp: temp['daily']['data'][1]['temperatureMax'],
       minTomorTemp: temp['daily']['data'][1]['temperatureMin'],
       id: weather_id
     }
   end
 
+  # Delete weather
   post '/delete' do
     @weather = Weather[:id => params[:weather_id]]
     @weather.destroy
     redirect '/weather'
   end
+
 
   post '/' do
     if session[:user_id] == nil
