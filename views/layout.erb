@@ -17,12 +17,21 @@
           </div>
         <div class="col-sm-1 col-md-1 col-lg-1"></div>
       </div>
-    </div>
+      <% if $message != "" %>
+        <div class="row">
+          <div class="col-sm-4 col-md-4 col-lg-4"></div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 message">
+            <p><%= $message %></p>
+            <% $message = '' %>
+          </div>
+          <div class="col-sm-4 col-md-4 col-lg-4"></div>
+        </div>
+      <% end %>
 
     <%= yield %>
 
     <%= erb :footer %>
-
+    </div>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" media="screen" title="no title" charset="utf-8">
   </body>
 </html>
